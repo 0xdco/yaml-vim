@@ -37,6 +37,12 @@ syn match   yamlDelimiter       "[-,:]\(\s\|\n\)"
 syn match   yamlBlock           "[\[\]\{\}>|]"
 syn match   yamlOperator        '[?+-]'
 syn match   yamlKey             '\(\.\|\w\)\+\(\s\+\(\.\|\w\)\+\)*\ze\s*:\(\s\|\n\)'
+syn region  yamlString          matchgroup=yamlStringDelimiter
+                                \ start=+"+ skip=+\\"+ end=+"+
+                                \ contains=yamlEscape,@Spell
+syn region  yamlString          matchgroup=yamlStringDelimiter
+                                \ start=+'+ skip=+''+ end=+'+
+                                \ contains=yamlSingleEscape,@Spell
 syn match   yamlScalar          '\(\(|\|>\)\s*\n*\r*\)\@<=\(\s\+\).*\n*\r*\(\(\3\).*\n\)*'
 
 " Predefined data types
@@ -105,6 +111,7 @@ hi link yamlComment         Comment
 hi link yamlBlock           Operator
 hi link yamlDelimiter       Delimiter
 hi link yamlString          String
+hi link yamlStringDelimiter yamlString
 hi link yamlBoolean         Boolean
 hi link yamlNull            Boolean
 hi link yamlTime            String
